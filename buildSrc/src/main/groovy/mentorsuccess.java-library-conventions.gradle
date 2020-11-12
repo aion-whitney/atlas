@@ -10,14 +10,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Setup the plugin versions to be used.
- */
 plugins {
-    id 'com.jfrog.artifactory' version "$jfrogArtifactoryVersion" apply false
-    id 'com.jfrog.bintray' version "$jfrogBintrayVersion" apply false
+    id 'mentorsuccess.java-common-conventions'
+    id 'java-library'
 }
-
-rootProject.name = 'atlas'
-include 'atlas'
-

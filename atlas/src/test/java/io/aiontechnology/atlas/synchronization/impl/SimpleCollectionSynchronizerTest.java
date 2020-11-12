@@ -1,6 +1,5 @@
 package io.aiontechnology.atlas.synchronization.impl;
 
-import io.aiontechnology.atlas.synchronization.impl.SimpleCollectionSynchronizer;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
