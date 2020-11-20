@@ -1,6 +1,5 @@
 package io.aiontechnology.atlas.classification.impl;
 
-import io.aiontechnology.atlas.classification.impl.FunctionBasedCollectionClassifier;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collection;

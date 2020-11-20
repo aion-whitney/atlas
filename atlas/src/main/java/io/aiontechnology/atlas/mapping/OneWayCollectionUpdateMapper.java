@@ -17,10 +17,10 @@ public interface OneWayCollectionUpdateMapper<FROM, TO> {
      * <p>
      * This type of mapping will have side effects. The given 'to' collection will be changed in the process.
      *
-     * @param from The object to map from.
+     * @param from The collection to map from.
      * @param to The collection to map to.
      * @return The resulting collection of mapped object.
      */
-    Collection<TO> map(FROM from, Collection<TO> to);
+    Collection<TO> map(Collection<FROM> from, Collection<TO> to);
 
 }

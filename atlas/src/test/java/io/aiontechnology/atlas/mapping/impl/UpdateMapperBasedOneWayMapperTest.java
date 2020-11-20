@@ -2,7 +2,6 @@ package io.aiontechnology.atlas.mapping.impl;
 
 import io.aiontechnology.atlas.mapping.OneWayUpdateMapper;
 import lombok.Data;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
