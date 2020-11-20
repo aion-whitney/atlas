@@ -36,11 +36,9 @@ bintray {
         publicDownloadNumbers = true
         override = true
         version {
-            name = '0.1.0'
-            desc = '0.1.0 build'
             released = new Date()
         }
     }
-    publications = ['JCenter']
+    publications = ['mavenJava']
 }
 
