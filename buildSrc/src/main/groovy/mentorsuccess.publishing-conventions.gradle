@@ -1,19 +1,24 @@
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+/*
+ * Copyright 2021 Aion Technology LLC
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
 
 plugins {
+    id 'maven'
     id 'maven-publish'
     id 'com.jfrog.artifactory'
-    id 'com.jfrog.bintray'
 }
 
 publishing {
@@ -37,14 +42,23 @@ publishing {
 
 artifactory {
     publish {
-        contextUrl = 'https://oss.jfrog.org'
+        contextUrl = "https://aiontechnology.jfrog.io/artifactory"
         repository {
-            repoKey = 'oss-snapshot-local'
-            username = System.getenv('BINTRAY_USER')
-            password = System.getenv('BINTRAY_KEY')
+            repoKey = 'aiontechnology-gradle-dev-local'
+            username = System.getenv('JFROG_USER')
+            password = System.getenv('JFROG_KEY')
+            maven = true
         }
         defaults {
             publications('mavenJava')
+            publishConfigs('archives', 'published')
+        }
+    }
+    resolve {
+        repository {
+            repoKey = 'aiontechnology-gradle-dev'
+            username = System.getenv('JFROG_USER')
+            maven = true
         }
     }
 }

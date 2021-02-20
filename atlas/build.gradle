@@ -21,24 +21,3 @@ plugins {
 
 dependencies {
 }
-
-bintray {
-    user = System.getenv('BINTRAY_USER')
-    key = System.getenv('BINTRAY_KEY')
-    pkg {
-        repo = 'Atlas'
-        name = 'io.aiontechnology.atlas'
-        desc = 'A Java library for mapping objects between types'
-        userOrg = 'aiontechnology'
-        licenses = ['Apache-2.0']
-        vcsUrl = 'https://bitbucket.org/aion-technology/atlas'
-        publish = true
-        publicDownloadNumbers = true
-        override = true
-        version {
-            released = new Date()
-        }
-    }
-    publications = ['mavenJava']
-}
-
