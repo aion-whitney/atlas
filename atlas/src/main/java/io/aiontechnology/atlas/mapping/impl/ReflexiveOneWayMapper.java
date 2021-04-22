@@ -15,10 +15,21 @@
  *
  */
 
-plugins {
-    id 'groovy-gradle-plugin'
-}
+package io.aiontechnology.atlas.mapping.impl;
 
-repositories {
-    gradlePluginPortal()
+import io.aiontechnology.atlas.mapping.OneWayMapper;
+
+import java.util.Optional;
+
+/**
+ * @author Whitney Hunter
+ * @since 0.2.0
+ */
+public class ReflexiveOneWayMapper<FROM, TO> implements OneWayMapper<FROM, TO> {
+
+    @Override
+    public Optional<TO> map(FROM from) {
+        return Optional.empty();
+    }
+
 }
