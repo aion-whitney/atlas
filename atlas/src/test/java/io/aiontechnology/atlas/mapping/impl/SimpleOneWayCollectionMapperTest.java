@@ -25,9 +25,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.hamcrest.CoreMatchers.hasItems;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Tests for {@link SimpleOneWayCollectionMapper}.
@@ -47,10 +45,10 @@ public class SimpleOneWayCollectionMapperTest {
         Collection<String> from = Collections.emptyList();
 
         // execute the SUT
-        Collection<Integer> result = stringIntegerSimpleOneWayCollectionMapper.map(from);
+        Optional<Collection<Integer>> result = stringIntegerSimpleOneWayCollectionMapper.map(from);
 
         // validation
-        assertThat(result.size(), is(0));
+        assertThat(result).isEmpty();
     }
 
     @Test
@@ -63,11 +61,12 @@ public class SimpleOneWayCollectionMapperTest {
         Collection<String> from = List.of("One", "Two", "Three", "Four");
 
         // execute the SUT
-        Collection<Integer> result = stringIntegerSimpleOneWayCollectionMapper.map(from);
+        Optional<Collection<Integer>> result = stringIntegerSimpleOneWayCollectionMapper.map(from);
 
         // validation
-        assertThat(result.size(), is(4));
-        assertThat(result, hasItems(3, 3, 5, 4));
+        assertThat(result).isPresent();
+        assertThat(result.get().size()).isEqualTo(4);
+        assertThat(result.get()).contains(3, 3, 5, 4);
     }
 
 }

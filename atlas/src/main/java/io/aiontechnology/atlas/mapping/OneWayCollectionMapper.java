@@ -26,17 +26,5 @@ import java.util.Collection;
  * @since 0.1.0
  */
 @FunctionalInterface
-public interface OneWayCollectionMapper<FROM, TO> {
-
-    /**
-     * Map the collection of 'from' objects to a collection of 'TO' objects.
-     * <p>
-     * This type of mapping should not have side effects. The from collection (or objects in it) should not be changed
-     * in the process.
-     *
-     * @param from The object to map from.
-     * @return The resulting collection of mapped object.
-     */
-    Collection<TO> map(Collection<FROM> from);
-
+public interface OneWayCollectionMapper<FROM, TO> extends OneWayMapper<Collection<FROM>, Collection<TO>> {
 }
