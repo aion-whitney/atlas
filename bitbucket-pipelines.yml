@@ -39,16 +39,12 @@ pipelines:
             - gradle -Psigning.keyId=$GPG_KEY -Psigning.password=$GPG_PWD -Psigning.secretKeyRingFile=/home/gradle/secring.gpg uploadArchives
     develop:
       - step:
-          name: Import GPG Key
-          script:
-            - openssl aes-256-cbc -pass pass:$OPENSSL_PWD -in private-key.gpg.enc -out private-key.gpg -d -md sha256
-            - gpg --import private-key.gpg
-      - step:
           name: Build and test
           caches:
             - gradle
           script:
-            - gradle build
+            - openssl aes-256-cbc -pass pass:$OPENSSL_PWD -in secring.gpg.enc -out /home/gradle/secring.gpg -d -md sha256
+            - gradle -Psigning.keyId=$GPG_KEY -Psigning.password=$GPG_PWD -Psigning.secretKeyRingFile=/home/gradle/secring.gpg build
           artifacts:
             - server/build/**
       - step:
@@ -56,14 +52,16 @@ pipelines:
           caches:
             - gradle
           script:
-            - gradle uploadArchive
+            - openssl aes-256-cbc -pass pass:$OPENSSL_PWD -in secring.gpg.enc -out /home/gradle/secring.gpg -d -md sha256
+            - gradle -Psigning.keyId=$GPG_KEY -Psigning.password=$GPG_PWD -Psigning.secretKeyRingFile=/home/gradle/secring.gpg uploadArchives
     master:
       - step:
           name: Build and test
           caches:
             - gradle
           script:
-            - gradle build
+            - openssl aes-256-cbc -pass pass:$OPENSSL_PWD -in secring.gpg.enc -out /home/gradle/secring.gpg -d -md sha256
+            - gradle -Psigning.keyId=$GPG_KEY -Psigning.password=$GPG_PWD -Psigning.secretKeyRingFile=/home/gradle/secring.gpg build
           artifacts:
             - server/build/**
       - step:
@@ -71,4 +69,5 @@ pipelines:
           caches:
             - gradle
           script:
-            - gradle uploadArchive
+            - openssl aes-256-cbc -pass pass:$OPENSSL_PWD -in secring.gpg.enc -out /home/gradle/secring.gpg -d -md sha256
+            - gradle -Psigning.keyId=$GPG_KEY -Psigning.password=$GPG_PWD -Psigning.secretKeyRingFile=/home/gradle/secring.gpg uploadArchives
