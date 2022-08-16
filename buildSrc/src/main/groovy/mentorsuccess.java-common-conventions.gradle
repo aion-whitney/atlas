@@ -25,7 +25,7 @@ version = "${version}"
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(14)
+        languageVersion = JavaLanguageVersion.of(11)
     }
 }
 
@@ -38,8 +38,7 @@ configurations {
 }
 
 repositories {
-    mavenLocal()
-    jcenter()
+    mavenCentral()
 }
 
 ext {

@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-image: gradle:6.7.1-jdk15-hotspot
+image: gradle:6.8.3-jdk15-hotspot
 
 pipelines:
   branches:
@@ -22,7 +22,8 @@ pipelines:
           caches:
             - gradle
           script:
-            - gradle build
+            - openssl aes-256-cbc -pass pass:$OPENSSL_PWD -in secring.gpg.enc -out /home/gradle/secring.gpg -d -md sha256
+            - gradle -Psigning.keyId=$GPG_KEY -Psigning.password=$GPG_PWD -Psigning.secretKeyRingFile=/home/gradle/secring.gpg build
           artifacts:
             - server/build/**
           after-script:
@@ -30,38 +31,43 @@ pipelines:
               variables:
                 CHECKSTYLE_RESULT_PATTERN: '.*/checkstyle.xml$'
       - step:
-          name: Deploy to artifactory
+          name: Deploy to Maven Central
           caches:
             - gradle
           script:
-            - gradle artifactoryPublish
+            - openssl aes-256-cbc -pass pass:$OPENSSL_PWD -in secring.gpg.enc -out /home/gradle/secring.gpg -d -md sha256
+            - gradle -Psigning.keyId=$GPG_KEY -Psigning.password=$GPG_PWD -Psigning.secretKeyRingFile=/home/gradle/secring.gpg uploadArchives
     develop:
       - step:
           name: Build and test
           caches:
             - gradle
           script:
-            - gradle build
+            - openssl aes-256-cbc -pass pass:$OPENSSL_PWD -in secring.gpg.enc -out /home/gradle/secring.gpg -d -md sha256
+            - gradle -Psigning.keyId=$GPG_KEY -Psigning.password=$GPG_PWD -Psigning.secretKeyRingFile=/home/gradle/secring.gpg build
           artifacts:
             - server/build/**
       - step:
-          name: Deploy to artifactory
+          name: Deploy to Maven Central
           caches:
             - gradle
           script:
-            - gradle artifactoryPublish
+            - openssl aes-256-cbc -pass pass:$OPENSSL_PWD -in secring.gpg.enc -out /home/gradle/secring.gpg -d -md sha256
+            - gradle -Psigning.keyId=$GPG_KEY -Psigning.password=$GPG_PWD -Psigning.secretKeyRingFile=/home/gradle/secring.gpg uploadArchives
     master:
       - step:
           name: Build and test
           caches:
             - gradle
           script:
-            - gradle build
+            - openssl aes-256-cbc -pass pass:$OPENSSL_PWD -in secring.gpg.enc -out /home/gradle/secring.gpg -d -md sha256
+            - gradle -Psigning.keyId=$GPG_KEY -Psigning.password=$GPG_PWD -Psigning.secretKeyRingFile=/home/gradle/secring.gpg build
           artifacts:
             - server/build/**
       - step:
-          name: Deploy to artifactory
+          name: Deploy to Maven Central
           caches:
             - gradle
           script:
-            - gradle artifactoryPublish
+            - openssl aes-256-cbc -pass pass:$OPENSSL_PWD -in secring.gpg.enc -out /home/gradle/secring.gpg -d -md sha256
+            - gradle -Psigning.keyId=$GPG_KEY -Psigning.password=$GPG_PWD -Psigning.secretKeyRingFile=/home/gradle/secring.gpg uploadArchives

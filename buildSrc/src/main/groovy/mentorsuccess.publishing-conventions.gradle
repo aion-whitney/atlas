@@ -17,48 +17,59 @@
 
 plugins {
     id 'maven'
-    id 'maven-publish'
-    id 'com.jfrog.artifactory'
+    id 'signing'
 }
 
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-            groupId 'io.aiontechnology'
-            artifact sourcesJar
-            artifact javadocJar
-            versionMapping {
-                usage('java-api') {
-                    fromResolutionOf('runtimeClasspath')
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            // Sign POM
+            beforeDeployment {
+                MavenDeployment deployment -> signing.signPom(deployment)
+            }
+
+            // Destination
+            repository(url: "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: System.getenv('ossrhUsername'), password: System.getenv('ossrhPassword'))
+            }
+            snapshotRepository(url: "https://s01.oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: System.getenv('ossrhUsername'), password: System.getenv('ossrhPassword'))
+            }
+
+            // Add required metadata to POM
+            pom.project {
+                name 'Atlas'
+                packaging 'jar'
+                description 'Atlas mapping project'
+                url 'https://bitbucket.org/aion-technology/atlas'
+
+                scm {
+                    connection 'scm:git:git://bitbucket.org:aion-technology/atlas.git'
+                    developerConnection 'scm:git:ssh://bitbucket.org:aion-technology/atlas.git'
+                    url 'https://bitbucket.org/aion-technology/atlas/src/master'
                 }
-                usage('java-runtime') {
-                    fromResolutionResult()
+
+                licenses {
+                    license {
+                        name 'The Apache License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'whitney'
+                        name 'Whitney Hunter'
+                        email 'whitney@aiontechnology.io'
+                        organization 'aiontechnology'
+                        organizationUrl 'http://aiontechnology.io'
+                    }
                 }
             }
-        }
-    }
-}
-
-artifactory {
-    publish {
-        contextUrl = "https://aiontechnology.jfrog.io/artifactory"
-        repository {
-            repoKey = 'aiontechnology-gradle-dev-local'
-            username = System.getenv('JFROG_USER')
-            password = System.getenv('JFROG_KEY')
-            maven = true
-        }
-        defaults {
-            publications('mavenJava')
-            publishConfigs('archives', 'published')
-        }
-    }
-    resolve {
-        repository {
-            repoKey = 'aiontechnology-gradle-dev'
-            username = System.getenv('JFROG_USER')
-            maven = true
         }
     }
 }
