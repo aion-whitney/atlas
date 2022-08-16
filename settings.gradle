@@ -19,7 +19,6 @@
  * Setup the plugin versions to be used.
  */
 plugins {
-    id 'com.jfrog.artifactory' version "$jfrogArtifactoryVersion" apply false
 }
 
 rootProject.name = 'atlas'

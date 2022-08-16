@@ -1,11 +1,11 @@
 /*
- * Copyright 2020-2022 Aion Technology LLC
+ * Copyright 2022 Aion Technology LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *   http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,11 +14,16 @@
  * limitations under the License.
  */
 
-plugins {
-    id 'mentorsuccess.java-library-conventions'
-    id 'mentorsuccess.publishing-conventions'
-}
+package io.aiontechnology.atlas.exception;
 
-dependencies {
-    implementation 'org.apache.commons:commons-lang3:3.12.0'
+/**
+ * @author Whitney Hunter
+ * @since 0.1.6
+ */
+public class ModelObjectConstructionError extends RuntimeException {
+
+    public ModelObjectConstructionError(String message, Throwable cause) {
+        super(message, cause);
+    }
+
 }
